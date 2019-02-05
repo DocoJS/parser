@@ -1,0 +1,90 @@
+{
+  "name": "@docojs/parser",
+  "version": "0.0.0",
+  "description": "Simple, modular JSDoc parser.",
+  "main": "dist/parser.js",
+  "module": "dist/parser.es2015.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "rlb",
+    "lint": "eslint src/**/*.js tests/**/*.js",
+    "pretest": "npm run lint && npm run build",
+    "test": "nyc mocha tests/*.js --timeout 15000 --require @babel/register",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "commitmsg": "is-ci && exit 0 || commitplease .git/COMMIT_EDITMSG",
+    "version": "npm test && git add -f dist/",
+    "postversion": "git rm -r --cached dist/ && git commit -m \"chore(dist): clean after release [ci skip]\" && git push origin && git push origin --tags"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DocoJS/parser.git"
+  },
+  "keywords": [
+    "JSDoc",
+    "parser",
+    "DocoJS"
+  ],
+  "author": "DocoJS Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DocoJS/parser/issues"
+  },
+  "homepage": "https://github.com/DocoJS/parser#readme",
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "dist/**/*.js",
+      "tests/**/*.js"
+    ]
+  },
+  "commitplease": {
+    "nohook": true,
+    "style": "angular",
+    "types": [
+      "feat",
+      "fix",
+      "docs",
+      "style",
+      "refactor",
+      "perf",
+      "test",
+      "build",
+      "ci",
+      "chore",
+      "revert"
+    ],
+    "scope": "\\S+.*"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "@comandeer/eslint-config": "^0.1.0",
+    "@comandeer/is-ci": "^1.0.0",
+    "@comandeer/rollup-lib-bundler": "^0.8.0",
+    "chai": "^4.2.0",
+    "codecov": "^3.1.0",
+    "commitplease": "^3.2.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.13.0",
+    "husky": "^1.3.1",
+    "mocha": "^5.2.0",
+    "nyc": "^13.2.0",
+    "rimraf": "^2.6.3"
+  }
+}
